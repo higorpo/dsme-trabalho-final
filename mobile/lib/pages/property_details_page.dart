@@ -1,8 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:mobile/services/properties.dart';
-import 'package:mobile/services/services.dart';
+
+import '../widgets/widgets.dart';
 
 import 'pages.dart';
 
@@ -79,47 +79,6 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class AlarmWidget extends StatelessWidget {
-  final int index;
-  final Alarm alarm;
-
-  const AlarmWidget({
-    Key? key,
-    required this.index,
-    required this.alarm,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            title: Text('Alarme $index'),
-            subtitle: Text(alarm.id),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              TextButton(
-                child: const Text('DESATIVAR'),
-                onPressed: () {},
-              ),
-              const SizedBox(width: 8),
-              TextButton(
-                child: const Text('VER ATIVIDADE'),
-                onPressed: () {},
-              ),
-              const SizedBox(width: 8),
-            ],
-          ),
-        ],
       ),
     );
   }
