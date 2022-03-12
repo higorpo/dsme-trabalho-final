@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../pages/pages.dart';
 import '../services/services.dart';
 
 class AlarmWidget extends StatefulWidget {
@@ -47,7 +48,16 @@ class _AlarmWidgetState extends State<AlarmWidget> {
               const SizedBox(width: 8),
               TextButton(
                 child: const Text('VER ATIVIDADE'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AlarmActivitiesPage(
+                        alarmId: widget.alarm.id,
+                      ),
+                    ),
+                  );
+                },
               ),
               const SizedBox(width: 8),
             ],
