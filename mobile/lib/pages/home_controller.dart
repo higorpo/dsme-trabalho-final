@@ -5,8 +5,8 @@ class HomeController extends ChangeNotifier {
   List<Property> _properties = [];
   bool _loading = true;
 
-  get propertie => _properties;
-  get loading => _loading;
+  List<Property> get properties => _properties;
+  bool get loading => _loading;
 
   Future<void> getProperties() async {
     _loading = true;

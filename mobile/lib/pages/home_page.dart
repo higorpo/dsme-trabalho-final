@@ -36,7 +36,36 @@ class _HomePageState extends State<HomePage> {
           if (controller.loading) {
             return const Center(child: CircularProgressIndicator());
           }
-          return Container();
+          return ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: controller.properties.length,
+            itemBuilder: (BuildContext context, int index) {
+              final property = controller.properties[index];
+
+              return Card(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      leading: const Icon(Icons.house),
+                      title: Text(property.address),
+                      subtitle: Text('${property.ownerName} - ${property.ownerPhone}'),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        TextButton(
+                          child: const Text('VERIFICAR'),
+                          onPressed: () {/* ... */},
+                        ),
+                        const SizedBox(width: 8),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
         },
       ),
     );
