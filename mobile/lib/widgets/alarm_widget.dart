@@ -46,19 +46,20 @@ class _AlarmWidgetState extends State<AlarmWidget> {
                 onPressed: toggleAlarmStatus,
               ),
               const SizedBox(width: 8),
-              TextButton(
-                child: const Text('VER ATIVIDADE'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AlarmActivitiesPage(
-                        alarmId: widget.alarm.id,
+              if (isActivated)
+                TextButton(
+                  child: const Text('VER ATIVIDADE'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AlarmActivitiesPage(
+                          alarmId: widget.alarm.id,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                ),
               const SizedBox(width: 8),
             ],
           ),
