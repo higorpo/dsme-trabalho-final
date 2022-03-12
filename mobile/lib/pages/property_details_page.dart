@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobile/services/properties.dart';
+import 'package:mobile/services/services.dart';
 
 import 'pages.dart';
 
@@ -68,9 +69,9 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 5,
+                    itemCount: controller.alarms.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return AlarmWidget(property: property);
+                      return AlarmWidget(index: index + 1, alarm: controller.alarms[index]);
                     },
                   )
                 ],
@@ -84,12 +85,14 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
 }
 
 class AlarmWidget extends StatelessWidget {
+  final int index;
+  final Alarm alarm;
+
   const AlarmWidget({
     Key? key,
-    required this.property,
+    required this.index,
+    required this.alarm,
   }) : super(key: key);
-
-  final Property property;
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +101,8 @@ class AlarmWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            title: Text('Alarme'),
-            subtitle: Text('alarme'),
+            title: Text('Alarme $index'),
+            subtitle: Text(alarm.id),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -111,16 +114,7 @@ class AlarmWidget extends StatelessWidget {
               const SizedBox(width: 8),
               TextButton(
                 child: const Text('VER ATIVIDADE'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PropertyDetailsPage(
-                        propertyId: property.id,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: () {},
               ),
               const SizedBox(width: 8),
             ],

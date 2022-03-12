@@ -4,24 +4,24 @@ import 'package:mobile/config/config.dart';
 class Alarm {
   late String id;
   late String propertyId;
-  late String isActived;
+  late bool isActivated;
   late String createdAt;
   late String updatedAt;
 
   Alarm({
     required this.id,
     required this.propertyId,
-    required this.isActived,
+    required this.isActivated,
     required this.createdAt,
     required this.updatedAt,
   });
 
   Alarm.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        propertyId = json['property_id'],
-        isActived = json['is_actived'],
-        createdAt = json['created_at'],
-        updatedAt = json['updated_at'];
+        propertyId = json['propertyId'],
+        isActivated = json['isActivated'],
+        createdAt = json['createdAt'],
+        updatedAt = json['updatedAt'];
 }
 
 enum AlarmError { unexpectedError, notFound, serverError }
@@ -51,7 +51,7 @@ class Alarms {
     }
   }
 
-  Future<Alarm> getAlarmsFromProperty(String propertyId) async {
+  Future<List<Alarm>> getAlarmsFromProperty(String propertyId) async {
     try {
       final response = await api.get('/alarms/fromProperty/$propertyId');
 
