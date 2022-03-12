@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_controller.dart';
+import 'pages.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -56,7 +56,16 @@ class _HomePageState extends State<HomePage> {
                       children: <Widget>[
                         TextButton(
                           child: const Text('VERIFICAR'),
-                          onPressed: () {/* ... */},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PropertyDetalsPage(
+                                  propertyId: property.id,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(width: 8),
                       ],
