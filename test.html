@@ -1,0 +1,18 @@
+<html>
+  <body>
+    <div id="content"></div>
+
+    <script type="text/javascript">
+      const source = new EventSource(
+        "http://127.0.0.1:8000/alarm-notifier/c7184e12-d561-48ba-afbe-0e8eefde7d3a"
+      );
+
+      source.addEventListener("message", (message) => {
+        console.log("Got", message);
+
+        // Display the event data in the `content` div
+        document.querySelector("#content").innerHTML = event.data;
+      });
+    </script>
+  </body>
+</html>
