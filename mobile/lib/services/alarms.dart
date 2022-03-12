@@ -71,4 +71,21 @@ class Alarms {
       throw AlarmError.unexpectedError;
     }
   }
+
+  void updateAlarmStatus(String alarmId, bool isActivated) async {
+    try {
+      await api.put('/alarms/$alarmId', data: {
+        'isActivated': isActivated,
+      });
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 404) {
+          throw AlarmError.notFound;
+        } else if (e.response!.statusCode == 500) {
+          throw AlarmError.serverError;
+        }
+      }
+      throw AlarmError.unexpectedError;
+    }
+  }
 }
