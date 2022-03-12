@@ -50,4 +50,25 @@ class Alarms {
       throw AlarmError.unexpectedError;
     }
   }
+
+  Future<Alarm> getAlarmsFromProperty(String propertyId) async {
+    try {
+      final response = await api.get('/alarms/fromProperty/$propertyId');
+
+      final responseBody = response.data.map((element) {
+        return Alarm.fromJson(element);
+      }).toList();
+
+      return responseBody.cast<Alarm>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 404) {
+          throw AlarmError.notFound;
+        } else if (e.response!.statusCode == 500) {
+          throw AlarmError.serverError;
+        }
+      }
+      throw AlarmError.unexpectedError;
+    }
+  }
 }
