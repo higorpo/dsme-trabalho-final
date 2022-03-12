@@ -5,12 +5,14 @@ import { AlreadyExistsException } from "../exceptions/AlreadyExistsException";
 import { NotFound } from "../exceptions/NotFound";
 import { CreateAlarmService } from "../services/CreateAlarmService";
 import { FindAlarmService } from "../services/FindAlarmService";
+import { ListAlarmService } from "../services/ListAlarmService";
 import { UpdateAlarmService } from "../services/UpdateAlarmService";
 
 class AlarmsController {
     constructor(
         private createAlarmService: CreateAlarmService,
         private findAlarmService: FindAlarmService,
+        private listAlarmService: ListAlarmService,
         private updateAlarmService: UpdateAlarmService
     ) {
         //
@@ -54,6 +56,18 @@ class AlarmsController {
                 alarmId,
                 isActivated
             );
+
+            return res.json(alarm).send();
+        } catch (err) {
+            return res.status(500).send({ error: "Unexpected error" });
+        }
+    }
+
+    async list(req: Request, res: Response) {
+        const { id: propertyId } = req.params;
+
+        try {
+            const alarm = await this.listAlarmService.execute(propertyId);
 
             return res.json(alarm).send();
         } catch (err) {
