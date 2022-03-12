@@ -39,25 +39,39 @@ class Properties {
     return _instance;
   }
 
+  Future<Property> get(String propertyId) async {
+    try {
+      final response = await api.get('/properties/$propertyId');
+      return Property.fromJson(response.data);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 404) {
+          throw PropertyError.notFound;
+        } else if (e.response!.statusCode == 500) {
+          throw PropertyError.serverError;
+        }
+      }
+      throw PropertyError.unexpectedError;
+    }
+  }
+
   Future<List<Property>> getAll() async {
     try {
       final response = await api.get('/properties');
 
-      switch (response.statusCode) {
-        case 200:
-          final responseBody = response.data.map((element) {
-            return Property.fromJson(element);
-          }).toList();
+      final responseBody = response.data.map((element) {
+        return Property.fromJson(element);
+      }).toList();
 
-          return responseBody.cast<Property>();
-        case 404:
+      return responseBody.cast<Property>();
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 404) {
           throw PropertyError.notFound;
-        case 500:
+        } else if (e.response!.statusCode == 500) {
           throw PropertyError.serverError;
-        default:
-          throw PropertyError.unexpectedError;
+        }
       }
-    } on DioError catch (_) {
       throw PropertyError.unexpectedError;
     }
   }
