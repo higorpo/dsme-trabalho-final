@@ -28,6 +28,8 @@ class Property {
   }
 }
 
+enum PropertyError { unexpectedError, notFound, serverError }
+
 class Properties {
   Properties._privateConstructor();
 
@@ -37,21 +39,26 @@ class Properties {
     return _instance;
   }
 
-  Future<List<Property>?> getAll() async {
+  Future<List<Property>> getAll() async {
     try {
       final response = await api.get('/properties');
 
-      if (response.statusCode == 200) {
-        final responseBody = response.data.map((element) {
-          return Property.fromJson(element);
-        }).toList();
+      switch (response.statusCode) {
+        case 200:
+          final responseBody = response.data.map((element) {
+            return Property.fromJson(element);
+          }).toList();
 
-        return responseBody.cast<Property>();
-      } else {
-        return [];
+          return responseBody.cast<Property>();
+        case 404:
+          throw PropertyError.notFound;
+        case 500:
+          throw PropertyError.serverError;
+        default:
+          throw PropertyError.unexpectedError;
       }
-    } on DioError catch (err) {
-      print(err);
+    } on DioError catch (_) {
+      throw PropertyError.unexpectedError;
     }
   }
 }

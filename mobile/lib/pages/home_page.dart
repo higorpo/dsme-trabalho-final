@@ -36,6 +36,13 @@ class _HomePageState extends State<HomePage> {
           if (controller.loading) {
             return const Center(child: CircularProgressIndicator());
           }
+
+          if (controller.errorMessage != null && controller.errorMessage!.isNotEmpty) {
+            return Center(
+              child: Text(controller.errorMessage!),
+            );
+          }
+
           return ListView.builder(
             padding: const EdgeInsets.all(8),
             itemCount: controller.properties.length,
