@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/widgets.dart';
+
 import 'pages.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +18,12 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     controller.getProperties();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -48,38 +56,7 @@ class _HomePageState extends State<HomePage> {
             itemCount: controller.properties.length,
             itemBuilder: (BuildContext context, int index) {
               final property = controller.properties[index];
-
-              return Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    ListTile(
-                      leading: const Icon(Icons.house),
-                      title: Text(property.address),
-                      subtitle: Text('${property.ownerName} - ${property.ownerPhone}'),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        TextButton(
-                          child: const Text('VERIFICAR'),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PropertyDetailsPage(
-                                  propertyId: property.id,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(width: 8),
-                      ],
-                    ),
-                  ],
-                ),
-              );
+              return PropertyWidget(property: property);
             },
           );
         },

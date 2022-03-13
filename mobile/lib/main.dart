@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'pages/pages.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const SecuritySystem());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class SecuritySystem extends StatelessWidget {
+  const SecuritySystem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

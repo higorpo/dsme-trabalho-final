@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 
 import '../widgets/widgets.dart';
@@ -8,7 +6,7 @@ import 'pages.dart';
 
 class PropertyDetailsPage extends StatefulWidget {
   final String propertyId;
-  const PropertyDetailsPage({required this.propertyId});
+  const PropertyDetailsPage({Key? key, required this.propertyId}) : super(key: key);
 
   @override
   _PropertyDetailsPageState createState() => _PropertyDetailsPageState();
@@ -21,6 +19,12 @@ class _PropertyDetailsPageState extends State<PropertyDetailsPage> {
   void initState() {
     controller.getProperty(widget.propertyId);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
